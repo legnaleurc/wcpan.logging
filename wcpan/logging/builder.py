@@ -17,7 +17,7 @@ class ConfigBuilder:
         rotate: bool = False,
         rotate_when: str = "h",
         processes: bool = False,
-        threads: bool = False
+        threads: bool = False,
     ) -> None:
         self._level: LevelName | None = level
         self._path = path

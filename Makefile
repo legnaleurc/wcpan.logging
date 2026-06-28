@@ -1,9 +1,9 @@
 RM := rm -rf
-PYTHON := poetry run -- python3
-BLACK := poetry run -- black
+PYTHON := uv run -- python3
+RUFF := uv run -- ruff
 
 PKG_FILES := pyproject.toml
-PKG_LOCK := poetry.lock
+PKG_LOCK := uv.lock
 ENV_DIR := .venv
 ENV_LOCK := $(ENV_DIR)/pyvenv.cfg
 
@@ -12,10 +12,12 @@ ENV_LOCK := $(ENV_DIR)/pyvenv.cfg
 all: venv
 
 format: venv
-	$(BLACK) tests wcpan
+	$(RUFF) format tests wcpan
+	$(RUFF) check --fix tests wcpan
 
 lint: venv
-	$(BLACK) --check tests wcpan
+	$(RUFF) format --check tests wcpan
+	$(RUFF) check tests wcpan
 
 clean:
 	$(RM) ./dist ./build ./*.egg-info
@@ -28,17 +30,17 @@ test: venv
 	$(PYTHON) -m unittest
 
 build: clean venv
-	poetry build
+	uv build
 
 publish: venv
-	poetry publish
+	uv publish
 
 venv: $(ENV_LOCK)
 
 $(ENV_LOCK): $(PKG_LOCK)
-	poetry install
+	uv sync
 	touch $@
 
 $(PKG_LOCK): $(PKG_FILES)
-	poetry lock --no-update
+	uv lock
 	touch $@

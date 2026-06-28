@@ -1,5 +1,6 @@
 from logging import Formatter, LogRecord
 
+
 TIMESTAMP = r"{asctime}"
 PROCESSES = r"{{processName:_<{size}.{size}}}"
 THREADS = r"{{threadName:_<{size}.{size}}}"

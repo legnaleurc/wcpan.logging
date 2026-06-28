@@ -1,27 +1,42 @@
-[tool.poetry]
+[project]
 name = "wcpan-logging"
 version = "2.1.0"
 description = "Configuration generator for builtin logging module."
-authors = ["Wei-Cheng Pan <legnaleurc@gmail.com>"]
+authors = [
+    {name = "Wei-Cheng Pan", email = "legnaleurc@gmail.com"}
+]
 license = "MIT"
 readme = "README.md"
-repository = "https://github.com/legnaleurc/wcpan.logging"
-packages = [{include = "wcpan"}]
+requires-python = ">=3.11,<4.0"
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
     "Topic :: Software Development",
     "Topic :: System :: Logging",
     "Typing :: Typed",
 ]
 
-[tool.poetry.dependencies]
-python = "^3.11"
+[project.urls]
+source = "https://github.com/legnaleurc/wcpan.logging"
 
-[tool.poetry.group.dev.dependencies]
-black = ">=23.1,<25.0"
+[dependency-groups]
+dev = [
+    "ruff>=0.15.20,<1.0.0",
+]
 
 [build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["wcpan"]
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "/wcpan",
+    "/tests",
+    "/README.md",
+    "/LICENSE.txt",
+]
